@@ -40,7 +40,6 @@
     '';
     hugo = "hugo server --disableFastRender -p 5050";
     parcel = "yarn parcel watch --no-hmr";
-    generate-qr = "${pkgs.qrencode}/bin/qrencode -t png $1 -o $2";
   };
 
   alejandra-check = {
@@ -75,7 +74,6 @@ in
           prebuild.exec = cmds.prebuild;
           hugo.exec = cmds.hugo;
           parcel.exec = cmds.parcel;
-          generate-qr.exec = cmds.generate-qr;
         };
 
         process = {

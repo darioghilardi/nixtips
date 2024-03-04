@@ -13,10 +13,6 @@ jobs:
   preview:
     runs-on: ubuntu-latest
 
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
-
     permissions:
       contents: read
       deployments: write
@@ -28,11 +24,11 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - uses: cachix/install-nix-action@v22
+      - uses: cachix/install-nix-action@v25
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
-      # - uses: cachix/cachix-action@v12
+      # - uses: cachix/cachix-action@v14
       #   with:
       #     name: nablaflow
       #     authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
@@ -51,8 +47,7 @@ jobs:
           cp -RL ./result/build/* ./build
 
       - name: generate preview qr code
-        run: nix develop --impure -c bash -c \
-          "generate-qr https://${{ env.PREVIEW_SUBDOMAIN }}.${{ env.SITE_URL }} ./build/qrcode.png"
+        run: nix run .#qrencode -- -t png 'https://${{ env.PREVIEW_SUBDOMAIN }}.${{ env.SITE_URL }}' -o build/qrcode.png
 
       # - name: deploy
       #   id: deploy

@@ -19,6 +19,8 @@
       devShell = pkgs.callPackage ./nix/dev.nix {inherit devenv inputs nodejs;};
     in {
       packages = {
+        inherit (pkgs) qrencode;
+
         default = website;
         # For now to fix https://github.com/cachix/devenv/issues/756
         devenv-up = self.devShells.${system}.default.config.procfileScript;
