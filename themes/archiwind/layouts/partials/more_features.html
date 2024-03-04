@@ -1,0 +1,55 @@
+<div id="more_features" class="border-t border-slate-200 px-4 py-24 text-center sm:px-8 lg:px-20">
+  <div class="mx-auto flex max-w-7xl flex-col">
+    {{ partial "components/section_title" (dict
+      "supertitle" "And more"
+      "title" "Everything included in the platform"
+      "subtitle" "ArchiWind is built on years of extensive research by academic experts specializing in urban winds<br /> and our experience working on numerous industry projects."
+      "class" "mb-12 lg:mb-16"
+      )
+    }}
+    <div
+      class="mt-0 flex flex-col space-y-8 first:mt-0 md:flex-row md:justify-between md:space-x-8 md:space-y-0"
+    >
+      {{ partial "components/more_feature" ( dict
+        "icon" "map-pin"
+        "title" "Automated wind statistics retrieval"
+        "description" "Wind statistics for your location are retrieved from ERA-5 and other accurate historical wind statistics datasets."
+        )
+      }}
+      {{ partial "components/more_feature" ( dict
+        "icon" "map"
+        "title" "3D visualisation of the data"
+        "description" "Freely move around in your model and explore how wind affects your site in an interactive 3D viewer."
+        )
+      }}
+      {{ partial "components/more_feature" ( dict
+        "icon" "document-check"
+        "title" "Fully automated report"
+        "description" "Generate a fully automated report with data, images and charts, presenting the detailed results from your simulation."
+        )
+      }}
+    </div>
+    <div
+      class="mt-12 flex flex-col space-y-8 first:mt-0 md:flex-row md:justify-between md:space-x-8 md:space-y-0"
+    >
+      {{ partial "components/more_feature" ( dict
+        "icon" "arrows-right-left"
+        "title" "Up to 32 wind directions"
+        "description" "Investigate the fields from 8, 16, or 32 wind directions, and increase the accuracy for the aggregated or averaged maps."
+        )
+      }}
+      {{ partial "components/more_feature" ( dict
+        "icon" "arrow-down-tray"
+        "title" "Export data for additional analysis"
+        "description" "All wind-assessment raw and processed data can be exported to perform additional custom analysis or integrations."
+        )
+      }}
+      {{ partial "components/more_feature" ( dict
+        "icon" "share"
+        "title" "Data sharing"
+        "description" "Your data is kept safe, but you can easily share assessments with your team and protect them with a password."
+        )
+      }}
+    </div>
+  </div>
+</div>

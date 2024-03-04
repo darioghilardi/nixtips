@@ -1,0 +1,45 @@
+{{ $pag := .Paginator }}
+{{ if gt $pag.TotalPages 1 }}
+  {{ $.Scratch.Set "dot_rendered" false }}
+  <ul class="pagination">
+    {{ if and (ne $pag.PageNumber 1) (ne $pag.PageNumber 2) }}
+      <li class="pagination-item">
+        <a href="{{ $pag.First.URL }}" rel="first" class="page-link">«</a>
+      </li>
+    {{ end }}
+
+    {{ if $pag.HasPrev }}
+      <li class="pagination-item">
+        <a href="{{ $pag.Prev.URL }}" rel="prev" class="page-link">‹</a>
+      </li>
+    {{ end }}
+
+    {{ range $pag.Pagers }}
+      {{ if eq . $pag }}
+        <li class="pagination-item pagination-item-active">
+          <a href="{{ .URL }}" class="page-link">{{ .PageNumber }}</a>
+        </li>
+      {{ else if and (ge .PageNumber (sub $pag.PageNumber 1)) (le .PageNumber (add $pag.PageNumber 1)) }}
+        {{ $.Scratch.Set "dot_rendered" false }}
+        <li class="pagination-item">
+          <a href="{{ .URL }}" class="page-link">{{ .PageNumber }}</a>
+        </li>
+      {{ else if eq ($.Scratch.Get "dot_rendered") false }}
+        {{ $.Scratch.Set "dot_rendered" true }}
+        <li class="pagination-item disabled"><a class="page-link">...</a></li>
+      {{ end }}
+    {{ end }}
+
+    {{ if $pag.HasNext }}
+      <li class="pagination-item">
+        <a href="{{ $pag.Next.URL }}" rel="next" class="page-link">›</a>
+      </li>
+    {{ end }}
+
+    {{ if and (ne $pag.PageNumber $pag.TotalPages) ((ne $pag.PageNumber (sub $pag.TotalPages 1))) }}
+      <li class="pagination-item">
+        <a href="{{ $pag.Last.URL }}" rel="last" class="page-link">»</a>
+      </li>
+    {{ end }}
+  </ul>
+{{ end }}

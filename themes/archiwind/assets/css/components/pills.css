@@ -1,0 +1,19 @@
+.pills-row-xl {
+  @apply flex gap-2 rounded-md border bg-gray-100 p-1;
+}
+
+.pill {
+  @apply flex cursor-pointer flex-col items-center rounded-md px-6 py-4;
+}
+
+.pill-active {
+  @apply bg-white;
+}
+
+.pill-title {
+  @apply text-lg font-semibold text-slate-800;
+}
+
+.pill-subtitle {
+  @apply text-xs font-normal;
+}

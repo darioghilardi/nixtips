@@ -1,0 +1,12 @@
+disableKinds:
+- sitemap
+- taxonomy
+- term
+outputs:
+  home:
+  - html
+params:
+  cms_url: "https://directus.nablaflow.io"
+caches:
+  getresource:
+    maxAge: 10s

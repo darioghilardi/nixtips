@@ -1,0 +1,73 @@
+<div id="features" class="border-t border-slate-200 bg-gray-50 py-16 lg:py-24">
+  <div class="mx-auto flex max-w-7xl flex-col">
+    {{ partial "components/section_title" (dict
+      "supertitle" "Features"
+      "title" "All you need for a complete wind assessment"
+      "subtitle" "Explore a wide range of features giving you the power to analyze all aspects of wind comfort and safety."
+      )
+    }}
+
+
+    <div class="flex flex-col gap-y-20 md:gap-y-24">
+      {{ partial "components/feature" (dict
+        "icon" "map"
+        "title" "Comfort Map"
+        "description" "The Lawson wind comfort criteria classify the conditions based on the associated \"comfortable\" activity using the wind simulations and wind statistics for the area."
+        "plus" (slice "Analyze pedestrian wind comfort" "Identify frequently windy and calm areas")
+        "image" "images/comfort_map.webp"
+        "alignment" "left"
+        )
+      }}
+
+      {{ partial "components/feature" (dict
+        "icon" "map"
+        "title" "Wind Speed Map"
+        "description" "The wind speed from each direction in percentage of regional reference wind speed at 10m height, typically given in the weather forecasts."
+        "plus" (slice "Identify wind directions causing wind acceleration or sheltering locally")
+        "image" "images/wind_speed.webp"
+        "alignment" "right"
+        )
+      }}
+
+      {{ partial "components/feature" (dict
+        "icon" "map"
+        "title" "Turbulence Intensity Map"
+        "description" "The turbulence intensity provides insights into the fluctuations and variations in wind speed."
+        "plus" (slice "Identify areas of high turbulence")
+        "image" "images/turbulence.webp"
+        "alignment" "left"
+        )
+      }}
+
+      {{ partial "components/feature" (dict
+        "icon" "map"
+        "title" "Average Wind Speed Map"
+        "description" "The average wind speed is calculated based on the wind simulations and local wind statistics."
+        "plus" (slice "Identify areas of frequently high and low wind speeds, complementary to the Pedestrian Wind Comfort Maps")
+        "image" "images/average_wind_speed.webp"
+        "alignment" "right"
+        )
+      }}
+
+      {{ partial "components/feature" (dict
+        "icon" "map"
+        "title" "Average Wind Power Density Map"
+        "description" "The average wind power density represents the wind power per unit area and is calculated based on the wind simulations and local wind statistics."
+        "plus" (slice "Find the optimal placement of an urban wind turbine and evaluate its feasibility")
+        "image" "images/average_wind_power_density.webp"
+        "alignment" "left"
+        )
+      }}
+
+      {{ partial "components/feature" (dict
+        "icon" "map"
+        "title" "Wind Safety Map"
+        "description" "The NEN 8100 standard classifies the wind safety risk based on how frequently one can expect the wind to exceed 15 m/s using the wind simulations and wind statistics for the area."
+        "plus" (slice "Reveal possibly dangerous wind conditions")
+        "image" "images/wind_safety.webp"
+        "alignment" "right"
+        )
+      }}
+    </div>
+  </div>
+</div>

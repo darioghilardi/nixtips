@@ -1,0 +1,36 @@
+<div id="jumbo" class="mt-[4.5rem] flex w-full flex-col border-b border-slate-200 bg-gray-50">
+  <div class="z-10 pt-8 sm:pt-12 md:pt-20">
+    <div
+      class="mx-auto flex w-full max-w-9xl flex-col items-center px-4 text-center md:w-[48rem] lg:w-[60rem]"
+    >
+      <div class="mb-6 flex flex-col space-y-6 md:mb-9 lg:mb-12">
+        <p class="text-sm font-semibold text-fuchsia-500 lg:text-base">
+          Accurate and reliable wind analysis
+        </p>
+        <h2 class="mt-0 text-4xl font-bold sm:text-5xl md:text-[3.4rem] lg:text-6xl">
+          State of the art wind-assessment for your projects
+        </h2>
+        <p class="text-lg font-normal leading-normal text-slate-600 lg:text-xl">
+          Analyze wind speeds, turbulences, wind comfort and safety to create pedestrian-friendly
+          spaces.
+        </p>
+      </div>
+      <div class="flex items-center justify-center gap-2">
+        <a
+          href="https://account.nablaflow.io/registration"
+          target="_blank"
+          class="btn btn-primary btn-sm md:btn-md lg:btn-lg flex items-center gap-2"
+          ><span>Start your free trial</span>
+          {{ partial "components/icon" (dict "name" "arrow-right" "class" "w-5 h-5 stroke-2 text-white") }}
+        </a>
+        <a
+          href="https://archiwind.nablaflow.io/v1/s/50be9cf8-cdc2-4c91-8f8a-449b63ae069d/Y8pzEo4sd3NwKrQ-wy_-mrsXZodknV"
+          class="btn btn-secondary btn-sm md:btn-md lg:btn-lg"
+          target="_blank"
+          >View an example</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="my-6 aspect-[2.3/1] max-h-[30rem]" x-data="plot3d($el)"></div>
+</div>

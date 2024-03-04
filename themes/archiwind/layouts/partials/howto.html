@@ -1,0 +1,69 @@
+<div id="how-it-works" class="border-t border-slate-200 py-24 text-left" x-data="{ active: 1 }">
+  <div class="mx-auto flex max-w-7xl flex-col px-8 text-base">
+    {{ partial "components/section_title" (dict
+      "supertitle" "How it works"
+      "title" "Professional wind assessment in three simple steps"
+      "subtitle" "Run a wind assessment in a few clicks, no coding skills or complex setup required."
+      "alignment" "left"
+      )
+    }}
+
+    <div class="mt-16 flex flex-col items-center justify-between lg:flex-row">
+      <ol class="mb-16 lg:mb-0 lg:w-1/2">
+        <li
+          class="max-w-xl cursor-pointer border-l-4 px-6 py-4"
+          :class="active == 1 ? 'border-fuchsia-500 bg-gray-50' : 'border-gray-100'"
+          x-on:click="active = 1"
+        >
+          <h3 class="mb-4 text-xl font-semibold">1. Configure your settings</h3>
+          <p>
+            Type in name, select number of wind directions you want to analyze, and set the
+            geographic position of your project.
+          </p>
+        </li>
+        <li
+          class="max-w-xl cursor-pointer border-l-4 px-6 py-4"
+          :class="active == 2 ? 'border-fuchsia-500 bg-gray-50' : 'border-gray-100'"
+          x-on:click="active = 2"
+        >
+          <h3 class="mb-4 text-xl font-semibold">2. Upload your models</h3>
+          <p>
+            Upload STL or OBJ files for the main building/buildings, surrounding buildings, terrain,
+            and optionally vegetation.
+          </p>
+        </li>
+        <li
+          class="max-w-xl cursor-pointer border-l-4 px-6 py-4"
+          :class="active == 3 ? 'border-fuchsia-500 bg-gray-50' : 'border-gray-100'"
+          x-on:click="active = 3"
+        >
+          <h3 class="mb-4 text-xl font-semibold">3. Analyze the results</h3>
+          <p>
+            Explore through interactive 3D visualizations the results of your wind assessment and
+            download a PDF report ready to be submitted to the authorities.
+          </p>
+        </li>
+      </ol>
+      <div class="max-w-xl">
+        <img
+          src="images/settings.gif"
+          class="rounded-2xl border-4 border-slate-600"
+          x-show="active == 1"
+          alt="Configure parameters image"
+        />
+        <img
+          src="images/upload.gif"
+          class="rounded-2xl border-4 border-slate-600"
+          x-show="active == 2"
+          alt="Upload models"
+        />
+        <img
+          src="images/results.gif"
+          class="rounded-2xl border-4 border-slate-600"
+          x-show="active == 3"
+          alt="Analyze results"
+        />
+      </div>
+    </div>
+  </div>
+</div>

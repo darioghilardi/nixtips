@@ -1,0 +1,54 @@
+{{ $cms := dict "cms_url" .Site.Params.cms_url }}
+{{ $url := printf "%s/graphql" $cms.cms_url }}
+<!-- prettier-ignore -->
+{{ $body := dict "query" `{
+    posts(filter: { tool: { _eq: "archiwind" } }) {
+      title
+      slug
+      body
+      date: published_date
+      featured_image
+      tool
+      meta_title
+      meta_description
+      short_excerpt
+      long_excerpt
+      author { full_name title picture }
+      tags { tags_id  { name } }
+    }
+  }`
+}}
+<!-- prettier-ignore -->
+{{ $options := dict
+  "method" "POST"
+  "headers" (dict
+    "Content-Type" "application/json"
+  )
+  "body" (jsonify $body)
+}}
+{{ with resources.GetRemote $url $options }}
+  {{ with .Err }}
+    {{ errorf "%#v" . }}
+  {{ else }}
+    {{ with transform.Unmarshal . }}
+      {{ with .data.posts }}
+        {{ range . }}
+          {{ $filename := printf "posts/%s.md" .slug }}
+          {{/* Reformat tags as the graphql response is nested */}}
+          {{ $tags := slice }}
+          {{ range .tags }}
+            {{ $tags = $tags | append (printf "'%s'" .tags_id.name) }}
+          {{- end }}
+          {{ $tags := dict "tags" (printf "[%s]" (delimit $tags ", ")) }}
+
+          {{ $context := merge . $tags $cms }}
+          {{ $yaml_template := resources.Get "post.yaml" }}
+          {{ $file := resources.ExecuteAsTemplate $filename $context $yaml_template }}
+          {{ $file := $file.RelPermalink }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ else }}
+  {{ errorf "Unable to get remote resource %q" $url }}
+{{ end }}

@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "mkhl.direnv",
+    "emeraldwalk.RunOnSave",
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode",
+    "kamadorueda.alejandra",
+    "budparr.language-hugo-vscode",
+    "kaellarkin.hugo-shortcode-syntax"
+  ]
+}

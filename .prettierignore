@@ -1,0 +1,5 @@
+**/*.nix
+.gitignore
+.prettierrc
+flake.lock
+*.yaml

@@ -1,0 +1,35 @@
+<div id="pricing" class="border-t border-slate-200 bg-gray-50 py-24">
+  <div class="mx-auto flex max-w-7xl flex-col items-center px-4 text-center sm:px-8">
+    {{ partial "components/section_title" (dict
+      "supertitle" "Pricing"
+      "title" "Which ArchiWind is right for you?"
+      "subtitle" "Subscribe to a plan or buy credit packs to use the platform when you need."
+      "class" "lg:!mb-16"
+      )
+    }}
+    <div x-data="plan('subscription')" class="w-full">
+      <div class="flex justify-center">
+        <div class="pills-row-xl">
+          <button
+            @click="togglePlan"
+            :class="{ 'pill-active': plan == 'subscription', 'pill-inactive' : plan == 'packs' }"
+            class="pill"
+          >
+            <span class="pill-title">Subscription</span>
+            <span class="pill-subtitle">Best value</span>
+          </button>
+          <button
+            @click="togglePlan"
+            :class="{ 'pill-active': plan == 'packs', 'pill-inactive' : plan == 'subscription' }"
+            class="pill"
+          >
+            <span class="pill-title">Credits Pack</span>
+            <span class="pill-subtitle">Pay as you go</span>
+          </button>
+        </div>
+      </div>
+      {{ partial "components/credits_pack.html" }}
+      {{ partial "components/subscription.html" }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<!doctype html>
+<html prefix="og: http://ogp.me/ns#" lang="{{ .Site.LanguageCode }}" class="scroll-smooth">
+  {{ partial "head.html" . }}
+  <body>
+    {{- partial "dev/dev-tools.html" . -}}
+    <div>
+      {{- partial "header.html" . -}}
+      <main>
+        {{- block "main" . }}{{- end }}
+      </main>
+      {{- partial "footer.html" . -}}
+    </div>
+  </body>
+</html>

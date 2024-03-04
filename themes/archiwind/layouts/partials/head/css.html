@@ -1,0 +1,7 @@
+{{ $options := dict "inlineImports" true }}
+{{ $styles := resources.Get "dist/index.css" }}
+{{ if hugo.IsProduction }}
+  {{ $styles = $styles | minify | fingerprint | resources.PostProcess }}
+{{ end }}
+<link type="text/css" href="{{ $styles.RelPermalink }}" rel="stylesheet" />
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />

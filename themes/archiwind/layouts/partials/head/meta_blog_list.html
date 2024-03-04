@@ -1,0 +1,28 @@
+<meta name="title" content="{{ .Params.Title }} | {{ .Site.Title }}" />
+<meta property="og:title" content="{{ .Params.Title }}" />
+<meta property="og:site_name" content="{{ .Site.Title }}" />
+<meta property="twitter:title" content="{{ .Params.Title }}" />
+<meta name="application-name" content="{{ .Site.Title }}" />
+
+<meta name="description" content="{{ .Params.description }}" />
+<meta property="og:description" content="{{ .Params.description }}" />
+<meta property="twitter:description" content="{{ .Params.description }}" />
+
+<meta property="url" content="{{ .Permalink }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta property="twitter:url" content="{{ .Permalink }}" />
+
+<meta property="og:type" content="article" />
+<meta
+  property="og:article:published_time"
+  content="{{ .Date.Format "2006-01-02T15:04:05Z0700" | safeHTML }}"
+/>
+<meta
+  property="article:published_time"
+  content="{{ .Date.Format "2006-01-02T15:04:05Z0700" | safeHTML }}"
+/>
+
+<meta itemprop="image" content="{{ .Site.Params.og_image | absURL }}" />
+<meta property="og:image" content="{{ .Site.Params.og_image | absURL }}" />
+<meta name="twitter:image" content="{{ .Site.Params.og_image | absURL }}" />
+<meta name="twitter:image:src" content="{{ .Site.Params.og_image | absURL }}" />

@@ -1,0 +1,10 @@
+<title>
+  {{- if .IsHome -}}
+    {{ .Site.Title }} | NablaFlow AS
+  {{- else if .Page.Title -}}
+    {{ .Page.Title }} |
+    {{ .Site.Title }}
+  {{- else -}}
+    {{ .Site.Title }}
+  {{- end -}}
+</title>

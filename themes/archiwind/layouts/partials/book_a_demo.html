@@ -1,0 +1,20 @@
+<div id="book-a-demo" class="flex flex-col border-t border-slate-200 lg:min-h-[450px] lg:flex-row">
+  <div
+    class="mx-auto flex max-w-2xl flex-col px-8 py-24 text-center lg:w-3/5 lg:justify-center lg:px-20 lg:text-left"
+  >
+    {{ partial "components/section_title" (dict
+      "supertitle" "Book a demo"
+      "title" "Want to learn more about our platform?"
+      "subtitle" "Book a demo with us to learn about the benefits of using ArchiWind to validate your projects."
+      "alignment" "left"
+      )
+    }}
+    <div class="mt-12 flex justify-start">
+      <a href="/#contact" class="btn btn-primary btn-md">Book a demo</a>
+    </div>
+  </div>
+  <div
+    class="min-h-min w-full bg-cover bg-center lg:block lg:w-2/5"
+    style="background-image: url('images/room.svg')"
+  ></div>
+</div>

@@ -1,0 +1,14 @@
+.envrc
+.hugo_build.lock
+node_modules
+hugo_stats.json
+result
+resources/
+.parcel-cache
+themes/**/assets/dist/
+public/
+
+# Nix stuff
+.direnv
+.devenv
+.pre-commit-config.yaml

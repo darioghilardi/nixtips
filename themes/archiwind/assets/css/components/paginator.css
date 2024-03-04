@@ -1,0 +1,15 @@
+.pagination {
+  @apply flex flex-row items-center justify-center gap-2;
+}
+
+.pagination-item {
+  @apply inline-flex h-10 w-10 flex-col items-center justify-center;
+}
+
+.pagination-item > a {
+  @apply font-semibold text-main;
+}
+
+.pagination-item-active {
+  @apply rounded-lg bg-gray-100;
+}

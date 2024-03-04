@@ -1,0 +1,32 @@
+baseURL = 'https://archiwind.io/'
+languageCode = 'en-us'
+theme = 'archiwind'
+title = 'ArchiWind'
+paginate = 6
+paginatePath = '/'
+summaryLength = 50
+enableRobotsTXT = true
+
+[params]
+  linkedin = "https://www.linkedin.com/company/nabla-flow"
+  instagram = "https://www.instagram.com/nablaflow"
+  og_image = "/images/archiwind_card.png"
+  description = "State of the art wind-assessment for your projects. Analyze wind speeds, turbulences, wind safety and comfort to create pedestrian-friendly spaces."
+  cms_url = "https://directus.nablaflow.io/"
+
+[security.exec]
+osEnv = ['.*']
+
+disableKinds = ["page", "section", "taxonomy", "term"]
+
+[module]
+[module.hugoVersion]
+extended = false
+min = "0.112.0"
+
+[[module.mounts]]
+source = "content"
+target = "content"
+[[module.mounts]]
+source = "prebuild/public/posts"
+target = "content/blog"

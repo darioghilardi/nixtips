@@ -1,0 +1,68 @@
+<div id="contact" class="border-t border-slate-200 px-4 py-24 text-left lg:px-0">
+  <div class="mx-auto flex max-w-9xl flex-col text-sm">
+    {{ partial "components/section_title" (dict
+      "supertitle" "Contact"
+      "title" "Get in touch"
+      "subtitle" "Please fill this form and we'll get back to you as soon as possible."
+      "class" "mb-12 lg:mb-16"
+      )
+    }}
+    <div x-data="contactForm()">
+      <p
+        x-show="formMessage"
+        class="mx-auto mb-8 max-w-2xl rounded-lg bg-green-100 p-4 text-center text-base font-medium text-slate-600"
+      >
+        <span class="mr-1 h-4 w-4">
+          {{ partial "components/done_icon" }}
+        </span>
+        <span x-text="formMessage"></span>
+      </p>
+      <form class="mx-auto mt-4 max-w-lg" @submit.prevent="submitForm">
+        <div class="form-control">
+          <label for="full-name-field">Full Name</label>
+          <input
+            x-model="formData.fullName"
+            type="text"
+            name="name"
+            placeholder="Full name"
+            required
+          />
+        </div>
+        <div class="form-control">
+          <label for="email">Email</label>
+          <input x-model="formData.email" type="email" name="email" placeholder="Email" required />
+        </div>
+        <div class="form-control">
+          <label>Message</label>
+          <textarea
+            x-model="formData.message"
+            class="h-32"
+            name="message"
+            placeholder="Your message..."
+            required
+          ></textarea>
+        </div>
+        <label class="mb-8 flex items-center">
+          <input
+            x-model="formData.privacy"
+            type="checkbox"
+            name="privacy"
+            class="checkbox"
+            required
+          />
+          <span class="text-base"
+            >You agree to our friendly
+            <a
+              class="text-slate-600 underline hover:text-slate-600"
+              href="https://www.iubenda.com/privacy-policy/65411767"
+              target="_blank"
+              >privacy policy</a
+            >.
+          </span>
+        </label>
+
+        <button class="btn btn-primary btn-md w-full">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

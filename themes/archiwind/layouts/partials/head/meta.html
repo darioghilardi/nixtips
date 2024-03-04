@@ -1,0 +1,27 @@
+<meta name="title" content="{{ .Site.Title }}" />
+<meta property="og:title" content="{{ .Site.Title }}" />
+<meta property="og:site_name" content="{{ .Site.Title }}" />
+<meta property="twitter:title" content="{{ .Site.Title }}" />
+<meta name="application-name" content="{{ .Site.Title }}" />
+
+{{- if .IsHome -}}
+  <meta name="description" content="{{ .Site.Params.Description }}" />
+  <meta property="og:description" content="{{ .Site.Params.Description }}" />
+  <meta property="twitter:description" content="{{ .Site.Params.Description }}" />
+{{- else -}}
+  <meta name="description" content="{{ .Params.Description }}" />
+  <meta property="og:description" content="{{ .Params.Description }}" />
+  <meta property="twitter:description" content="{{ .Params.Description }}" />
+{{- end }}
+
+
+<meta property="url" content="{{ .Permalink }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta property="twitter:url" content="{{ .Permalink }}" />
+
+<meta itemprop="image" content="{{ .Site.Params.og_image | absURL }}" />
+<meta property="og:image" content="{{ .Site.Params.og_image | absURL }}" />
+<meta name="twitter:image" content="{{ .Site.Params.og_image | absURL }}" />
+<meta name="twitter:image:src" content="{{ .Site.Params.og_image | absURL }}" />
+
+<meta property="og:type" content="website" />

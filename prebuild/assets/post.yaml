@@ -1,0 +1,17 @@
+---
+title: "{{ .title }}"
+slug: "{{ .slug }}"
+date: {{ .date }}
+featured_image: "{{ .cms_url }}/assets/{{ .featured_image }}"
+author: "{{ .author.full_name }}"
+author_title: "{{ .author.title }}"
+author_image: "{{ .cms_url }}/assets/{{ .author.picture }}"
+meta_title: "{{ .meta_title }}"
+meta_description: "{{ .meta_description }}"
+tool: "{{ .tool }}"
+short_excerpt: "{{ .short_excerpt }}"
+long_excerpt: "{{ .long_excerpt }}"
+tags: {{ .tags }}
+---
+
+{{ .body }}

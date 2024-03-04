@@ -1,0 +1,32 @@
+{
+  "license": "MIT",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nablaflow/archiwind.io"
+  },
+  "source": "themes/archiwind/assets/js/index.js",
+  "targets": {
+    "default": {
+      "distDir": "themes/archiwind/assets/dist/",
+      "optimize": true
+    }
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.6",
+    "@tailwindcss/typography": "^0.5.9",
+    "parcel": "^2.9.3",
+    "postcss-import": "^15.1.0",
+    "prettier": "^3.0.3",
+    "prettier-plugin-go-template": "^0.0.15",
+    "prettier-plugin-tailwindcss": "^0.5.4",
+    "tailwindcss": "^3.3.2"
+  },
+  "name": "nablaflow-archiwind-website",
+  "version": "0.1.0",
+  "dependencies": {
+    "alpinejs": "^3.13.0",
+    "camera-controls": "^2.7.3",
+    "three": "0.160.0"
+  }
+}

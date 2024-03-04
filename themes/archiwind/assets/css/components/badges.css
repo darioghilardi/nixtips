@@ -1,0 +1,7 @@
+.badge-popular-sm {
+  @apply rounded-full border border-fuchsia-500 bg-pink-50 px-2.5 py-0.5 text-xs font-semibold text-fuchsia-500;
+}
+
+.badge-popular-lg {
+  @apply rounded-full border border-fuchsia-500 bg-pink-50 px-5 py-2 text-xs font-semibold text-fuchsia-500;
+}

@@ -1,0 +1,26 @@
+<div class="bg-gray-50">
+  <div class="mx-auto flex max-w-9xl flex-col space-y-8 px-12 py-16">
+    <div class="text-center text-base font-semibold uppercase leading-normal text-gray-500">
+      Trusted by
+    </div>
+    <div class="relative flex items-center justify-center">
+      <div
+        class="relative mx-auto max-w-7xl overflow-hidden before:absolute before:left-0 before:top-0 before:z-[2] before:h-full before:w-[100px] before:bg-[linear-gradient(to_right,gray-50_0%,rgba(249,250,251,0)_100%)] before:content-[''] after:absolute after:right-0 after:top-0 after:z-[2] after:h-full after:w-[100px] after:-scale-x-100 after:bg-[linear-gradient(to_right,gray-50_0%,rgba(249,250,251,0)_100%)] after:content-['']"
+        x-data="{slides: ['customers/aros.png', 'customers/helen&hard.png', 'customers/map-plan.png', 'customers/stafr.png', 'customers/stavanger-kommune.svg', 'customers/trondheim-kommune.png', 'customers/ghilardi_hellsten.png']}"
+      >
+        <div class="flex w-[calc(320px*10)] animate-infinite-slider flex-row items-center">
+          <template x-for="slide in slides" class="flex flex-row items-center">
+            <div class="mx-8 flex items-center justify-center md:mx-16">
+              <img class="h-20 w-auto object-contain" :src="slide" />
+            </div>
+          </template>
+          <template x-for="slide in slides" class="flex flex-row items-center" aria-hidden="true">
+            <div class="mx-8 flex items-center justify-center md:mx-16">
+              <img class="h-20 w-auto object-contain" :src="slide" />
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
