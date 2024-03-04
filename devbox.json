@@ -1,0 +1,19 @@
+{
+  "packages": [
+    "hugo@0.123.4",
+    "nodejs@21.6.2",
+    "yarn@1.22.19",
+    "go@1.22.0",
+    "process-compose@latest",
+    "qrencode@4.1.1"
+  ],
+  "shell": {
+    "init_hook": ["echo 'Welcome to devbox!' > /dev/null"],
+    "scripts": {
+      "setup": "yarn install",
+      "dev": ["rm -rf .parcel-cache", "process-compose -t=0"],
+      "test": "yarn prettier --check .",
+      "generate-qr": "qrencode -t png $1 -o $2"
+    }
+  }
+}

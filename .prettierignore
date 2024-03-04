@@ -3,3 +3,4 @@
 .prettierrc
 flake.lock
 *.yaml
+*.yml

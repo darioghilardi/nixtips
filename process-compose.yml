@@ -1,0 +1,7 @@
+version: "0.5"
+
+processes:
+  parcel:
+    command: yarn parcel watch --no-hmr
+  hugo:
+    command: hugo server --disableFastRender -p 5050
