@@ -4,7 +4,7 @@ const colors = require('tailwindcss/colors')
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
-  content: ['./themes/archiwind/**/*.{html,js}'],
+  content: ['./themes/techblog/**/*.{html,js}'],
   plugins: [typography, forms],
   theme: {
     extend: {

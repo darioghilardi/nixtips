@@ -34,24 +34,13 @@
 
   cmds = {
     prebuild = ''
-      rm -rf prebuild/public && rm -rf .parcel-cache
+      rm -rf .parcel-cache
       yarn parcel build
-      cd prebuild && hugo
     '';
     hugo = "hugo server --disableFastRender -p 5050";
     parcel = "yarn parcel watch --no-hmr";
-  };
-
-  alejandra-check = {
-    enable = true;
-    name = "alejandra-check";
-    entry = pkgs.lib.mkForce "${pkgs.alejandra}/bin/alejandra --check .";
-  };
-
-  prettier-check = {
-    enable = true;
-    name = "prettier-check";
-    entry = pkgs.lib.mkForce "${node-modules}/node_modules/prettier/bin/prettier.cjs --check .";
+    prettier = "${node-modules}/node_modules/prettier/bin/prettier.cjs --write .";
+    alejandra = "${pkgs.alejandra}/bin/alejandra --check .";
   };
 in
   devenv.lib.mkShell {
@@ -72,8 +61,10 @@ in
 
         scripts = {
           prebuild.exec = cmds.prebuild;
-          hugo.exec = cmds.hugo;
-          parcel.exec = cmds.parcel;
+          hugo-server.exec = cmds.hugo;
+          parcel-server.exec = cmds.parcel;
+          prettier.exec = cmds.prettier;
+          alejandra.exec = cmds.alejandra;
         };
 
         process = {
@@ -109,21 +100,6 @@ in
         pre-commit = {
           hooks = {
             statix.enable = true;
-
-            # Alejandra can be enabled with
-            # alejandra.enable = true;
-            # However this writes files when it runs. Until the
-            # following PR is merged a custom hook calling alexandra
-            # check is used instead.
-            # https://github.com/cachix/pre-commit-hooks.nix/pull/353
-            inherit alejandra-check;
-
-            # Prettier can be enabled with
-            # prettier.enable = true;
-            # However this writes files when it runs. Also, prettier
-            # plugins are not in nixpkgs. A custom hook that uses
-            # prettier from node_modules is used instead.
-            inherit prettier-check;
           };
         };
       })
