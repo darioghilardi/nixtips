@@ -40,18 +40,19 @@ jobs:
       #     USER: runner
 
       - name: checks
-        run: devbox run test
+        run: nix develop --impure -c "pre-commit"
 
       - name: build
-        run: cd nix && nix build .
+        run: nix build --impure . -L --no-sandbox
 
       - name: copy artifacts
         run: |
           mkdir build
-          cp -RL ./nix/result/build/* ./build
+          cp -RL ./result/build/* ./build
 
       - name: generate preview qr code
-        run: "devbox run generate-qr https://${{ env.PREVIEW_SUBDOMAIN }}.${{ env.SITE_URL }} ./build/qrcode.png"
+        run: nix develop --impure -c bash -c \
+          "generate-qr https://${{ env.PREVIEW_SUBDOMAIN }}.${{ env.SITE_URL }} ./build/qrcode.png"
 
       # - name: deploy
       #   id: deploy

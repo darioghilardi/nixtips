@@ -11,28 +11,24 @@ If you use `nix-direnv` the required dependencies will be automatically fetched.
 Then install the node dependencies with:
 
 ```
-yarn install
+devbox run setup
 ```
 
 ### Development
 
-Copy the `.envrc.example` file to `.envrc` and set the value for the required variables.
-
-Pre-commit hooks are configured to check code quality (prettier, alejandra, statix). To execute those hooks manually run `pre-commit` after `git add`.
-
-To start the local development server run the following command. Most changes are reflected live without having to restart the server.
+To start the local development server on port 5050 run the following command. Most changes are reflected live without server restart.
 
 ```
-devenv up
+devbox run dev
 ```
 
 ### Build
 
 ```
-nix build .
+cd nix && nix build .
 ```
 
-This command generates static content into the `public` directory and can be served using any static contents hosting service.
+This command generates static content into the `nix/public` directory and can be served using any static contents hosting service.
 
 ### Updates
 
@@ -61,13 +57,11 @@ The root Hugo installation then mounts the `prebuild/public/posts` folder to `co
 
 ### Dev environment configuration
 
-The development environment is configured using Nix and [devenv.sh](https://devenv.sh/).
+The development environment is configured using Nix and [devbox](https://www.jetpack.io/devbox/docs/).
 
 After cloning this project, a few build commands must be executed or Hugo cannot be started in development mode:
 
 - `cd prebuild && hugo`: to fetch the blog posts from the CMS and generate the corresponding markdown files on the filesystem.
 - `yarn parcel build`: to build the first time the static assets (js and css files) for the project.
 
-You don't have to worry about running those two steps manually as they are executed automatically when you run `devenv up`.
-
-[process-compose](https://github.com/F1bonacc1/process-compose) is used in `nix/dev.nix` which takes care of executing those commands in the right order, starting `hugo server` and `parcel watch` right after them.
+You don't have to worry about running those two steps manually as they are executed automatically when you run `devbox run dev`.
