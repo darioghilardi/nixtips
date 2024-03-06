@@ -4,7 +4,7 @@ const colors = require('tailwindcss/colors')
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
-  content: ['./themes/archiwind/**/*.{html,js}'],
+  content: ['./themes/nixtips/**/*.{html,js}'],
   plugins: [typography, forms],
   theme: {
     extend: {
@@ -26,7 +26,7 @@ module.exports = {
               'text-decoration-color': theme('colors.slate[300]'),
               'text-underline-offset': '2px',
               '&:hover': {
-                color: theme('colors.fuchsia[500]'),
+                color: theme('colors.sky[500]'),
               },
             },
           },

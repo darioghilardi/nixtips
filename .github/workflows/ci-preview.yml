@@ -4,18 +4,14 @@ on:
   pull_request:
 
 env:
-  PROJECT_NAME: archiwind-io
-  SITE_NAME: archiwind.io
-  SITE_URL: archiwind-io.pages.dev
+  PROJECT_NAME: nixtips
+  SITE_NAME: nixtips.io
+  SITE_URL: nixtips.pages.dev
   PREVIEW_SUBDOMAIN: deploy-preview-${{ github.event.number }}
 
 jobs:
   preview:
     runs-on: ubuntu-latest
-
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
     permissions:
       contents: read
@@ -28,11 +24,11 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - uses: cachix/install-nix-action@v22
+      - uses: cachix/install-nix-action@v25
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
-      # - uses: cachix/cachix-action@v12
+      # - uses: cachix/cachix-action@v14
       #   with:
       #     name: nablaflow
       #     authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
@@ -40,18 +36,18 @@ jobs:
       #     USER: runner
 
       - name: checks
-        run: devbox run test
+        run: nix develop --impure -c "pre-commit"
 
       - name: build
-        run: cd nix && nix build .
+        run: nix build --impure . -L --no-sandbox
 
       - name: copy artifacts
         run: |
           mkdir build
-          cp -RL ./nix/result/build/* ./build
+          cp -RL ./result/build/* ./build
 
       - name: generate preview qr code
-        run: "devbox run generate-qr https://${{ env.PREVIEW_SUBDOMAIN }}.${{ env.SITE_URL }} ./build/qrcode.png"
+        run: nix run .#qrencode -- -t png 'https://${{ env.PREVIEW_SUBDOMAIN }}.${{ env.SITE_URL }}' -o build/qrcode.png
 
       # - name: deploy
       #   id: deploy
