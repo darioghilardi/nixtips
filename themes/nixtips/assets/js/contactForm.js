@@ -8,7 +8,7 @@ export const setupContactForm = (Alpine) =>
         privacy: '',
       },
       formMessage: '',
-      formAction: 'https://formspree.io/f/xnqkgevv',
+      formAction: 'https://formspree.io/f/xqkrlabn',
       submitForm() {
         this.formMessage = ''
         fetch(this.formAction, {
