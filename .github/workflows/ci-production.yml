@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  PROJECT_NAME: archiwind-io
+  PROJECT_NAME: nixtips
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

@@ -3,12 +3,12 @@
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nablaflow/archiwind.io"
+    "url": "https://github.com/darioghilardi/nixtips"
   },
-  "source": "themes/techblog/assets/js/index.js",
+  "source": "themes/nixtips/assets/js/index.js",
   "targets": {
     "default": {
-      "distDir": "themes/techblog/assets/dist/",
+      "distDir": "themes/nixtips/assets/dist/",
       "optimize": true
     }
   },
@@ -22,7 +22,7 @@
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.1"
   },
-  "name": "nablaflow-archiwind-website",
+  "name": "nixtips-website",
   "version": "0.1.0",
   "dependencies": {
     "alpinejs": "^3.13.6"

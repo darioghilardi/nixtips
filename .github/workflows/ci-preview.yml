@@ -4,9 +4,9 @@ on:
   pull_request:
 
 env:
-  PROJECT_NAME: archiwind-io
-  SITE_NAME: archiwind.io
-  SITE_URL: archiwind-io.pages.dev
+  PROJECT_NAME: nixtips
+  SITE_NAME: nixtips.io
+  SITE_URL: nixtips.pages.dev
   PREVIEW_SUBDOMAIN: deploy-preview-${{ github.event.number }}
 
 jobs:

@@ -96,12 +96,6 @@ in
             };
           };
         };
-
-        pre-commit = {
-          hooks = {
-            statix.enable = true;
-          };
-        };
       })
     ];
   }

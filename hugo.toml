@@ -1,7 +1,7 @@
 baseURL = 'https://archiwind.io/'
 languageCode = 'en-us'
-theme = 'techblog'
-title = 'TechBlog'
+theme = 'nixtips'
+title = 'NixTips'
 paginate = 6
 paginatePath = '/'
 summaryLength = 50
