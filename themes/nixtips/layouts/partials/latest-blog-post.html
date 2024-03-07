@@ -5,19 +5,21 @@
     <div class="w-full lg:w-1/2">
       <a href="{{ .RelPermalink }}">
         <img
-          src="{{ .Params.featured_image }}/{{ .Params.slug }}.webp?key=featured-image-home"
+          src="{{ .Params.featured_image }}"
           alt="{{ .Params.title }} image"
           class="w-full rounded-2xl"
         />
       </a>
     </div>
     <div class="flex w-full flex-col lg:w-1/2 lg:px-8">
-      <ul class="flex list-none flex-row gap-3 pb-2 pt-5 font-semibold text-sky-500 lg:pt-0">
+      <ul class="flex list-none flex-row gap-3 pb-2 pt-5 font-semibold text-sky-600 lg:pt-0">
         {{ range .Params.tags }}
           <li>{{ . }}</li>
         {{ end }}
       </ul>
-      <a href="{{ .RelPermalink }}"><h5 class="pb-2 text-2xl font-semibold">{{ .Title }}</h5></a>
+      <a href="{{ .RelPermalink }}"
+        ><h5 class="font-display pb-2 text-2xl font-semibold">{{ .Title }}</h5></a
+      >
       <p class="mb-8 text-base font-normal">
         {{ .Summary | safeHTML }}
       </p>

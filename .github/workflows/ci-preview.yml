@@ -49,44 +49,44 @@ jobs:
       - name: generate preview qr code
         run: nix run .#qrencode -- -t png 'https://${{ env.PREVIEW_SUBDOMAIN }}.${{ env.SITE_URL }}' -o build/qrcode.png
 
-      # - name: deploy
-      #   id: deploy
-      #   uses: cloudflare/pages-action@1
-      #   with:
-      #     apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      #     accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      #     projectName: ${{ env.PROJECT_NAME}}
-      #     directory: ./build
-      #     gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-      #     wranglerVersion: '3'
-      #     branch: ${{ env.PREVIEW_SUBDOMAIN }}
+      - name: deploy
+        id: deploy
+        uses: cloudflare/pages-action@1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ${{ env.PROJECT_NAME}}
+          directory: ./build
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          wranglerVersion: '3'
+          branch: ${{ env.PREVIEW_SUBDOMAIN }}
 
-      # - name: prepare pr comment
-      #   uses: actions/github-script@v6
-      #   id: set-pr-comment-vars
-      #   with:
-      #     script: |
-      #       const shortSha = "${{ github.event.pull_request.head.sha }}".substring(0, 7);
-      #       return { shortSha };
+      - name: prepare pr comment
+        uses: actions/github-script@v6
+        id: set-pr-comment-vars
+        with:
+          script: |
+            const shortSha = "${{ github.event.pull_request.head.sha }}".substring(0, 7);
+            return { shortSha };
 
-      # - name: add pr preview comment
-      #   uses: mshick/add-pr-comment@v2
-      #   env:
-      #     COMMIT_URL: 'https://github.com/${{ github.repository }}/commit/${{ github.event.pull_request.head.sha }}'
-      #     DEPLOY_LOG_URL: ${{ format('{0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id) }}
-      #     PREVIEW_URL: 'https://${{ env.PREVIEW_SUBDOMAIN }}.${{ env.SITE_URL }}'
-      #     SHORT_SHA: ${{ fromJson(steps.set-pr-comment-vars.outputs.result).shortSha }}
-      #   with:
-      #     message: |
-      #       ## ✅ Deploy preview for _${{ env.SITE_NAME }}_ is ready!
+      - name: add pr preview comment
+        uses: mshick/add-pr-comment@v2
+        env:
+          COMMIT_URL: 'https://github.com/${{ github.repository }}/commit/${{ github.event.pull_request.head.sha }}'
+          DEPLOY_LOG_URL: ${{ format('{0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id) }}
+          PREVIEW_URL: 'https://${{ env.PREVIEW_SUBDOMAIN }}.${{ env.SITE_URL }}'
+          SHORT_SHA: ${{ fromJson(steps.set-pr-comment-vars.outputs.result).shortSha }}
+        with:
+          message: |
+            ## ✅ Deploy preview for _${{ env.SITE_NAME }}_ is ready!
 
-      #       | Name  | Link |
-      #       | ------------- | ------------- |
-      #       | :hammer_and_pick: Latest commit  | [`${{ env.SHORT_SHA }}`](${{ env.COMMIT_URL }}) |
-      #       | :mag: Latest deploy log on Github Actions | [${{ env.DEPLOY_LOG_URL }}](${{ env.DEPLOY_LOG_URL }}) |
-      #       | :sunglasses: Deploy preview  | [${{ env.PREVIEW_URL }}](${{ env.PREVIEW_URL }}) |
-      #       | :iphone: Mobile preview | <details><summary>Toggle QR code...</summary><pre>![preview-qrcode](${{ steps.deploy.outputs.alias }}/qrcode.png)</pre></details> |
+            | Name  | Link |
+            | ------------- | ------------- |
+            | :hammer_and_pick: Latest commit  | [`${{ env.SHORT_SHA }}`](${{ env.COMMIT_URL }}) |
+            | :mag: Latest deploy log on Github Actions | [${{ env.DEPLOY_LOG_URL }}](${{ env.DEPLOY_LOG_URL }}) |
+            | :sunglasses: Deploy preview  | [${{ env.PREVIEW_URL }}](${{ env.PREVIEW_URL }}) |
+            | :iphone: Mobile preview | <details><summary>Toggle QR code...</summary><pre>![preview-qrcode](${{ steps.deploy.outputs.alias }}/qrcode.png)</pre></details> |
 
-      #       <hr />
+            <hr />
 
-      #       _Message generated from Github Actions._
+            _Message generated from Github Actions._
