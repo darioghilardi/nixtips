@@ -1,4 +1,4 @@
-{{- range (where site.RegularPages "Section" "blog" | first 1) }}
+{{- range (where .Site.RegularPages "Section" "blog" | first 1) }}
   <div
     class="mx-auto flex w-full flex-col items-center px-4 sm:px-8 md:w-2/3 lg:w-full lg:flex-row"
   >
