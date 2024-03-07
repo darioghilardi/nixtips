@@ -52,39 +52,41 @@
   <meta name="twitter:image:src" content="{{ .Site.Params.og_image | absURL }}" />
 {{ end }}
 
-{{ $paginator := .Paginate (after 1 (where site.RegularPages "Section" "blog" )) }}
-{{ if $paginator }}
-  <link rel="first" href="{{ $paginator.First.URL }}" />
-  <link rel="last" href="{{ $paginator.Last.URL }}" />
-  {{ if $paginator.HasPrev }}
-    <link rel="prev" href="{{ $paginator.Prev.URL }}" />
-  {{ end }}
-  {{ if $paginator.HasNext }}
-    <link rel="next" href="{{ $paginator.Next.URL }}" />
-  {{ end }}
+{{ if false }}
+  {{ $paginator := .Paginate (after 1 (where .Site.RegularPages "Section" "blog" )) }}
+  {{ if $paginator }}
+    <link rel="first" href="{{ $paginator.First.URL }}" />
+    <link rel="last" href="{{ $paginator.Last.URL }}" />
+    {{ if $paginator.HasPrev }}
+      <link rel="prev" href="{{ $paginator.Prev.URL }}" />
+    {{ end }}
+    {{ if $paginator.HasNext }}
+      <link rel="next" href="{{ $paginator.Next.URL }}" />
+    {{ end }}
 
 
-  <meta
-    name="title"
-    content="{{ .Params.Title }}{{ if ne $paginator.PageNumber 1 }}
-      - Page:
-      {{ $paginator.PageNumber }}
-    {{ end }}"
-  />
-  <meta
-    property="og:title"
-    content="{{ .Params.Title }}{{ if ne $paginator.PageNumber 1 }}
-      - Page:
-      {{ $paginator.PageNumber }}
-    {{ end }}"
-  />
-  <meta property="og:site_name" content="{{ .Site.Title }}" />
-  <meta
-    property="twitter:title"
-    content="{{ .Params.Title }}{{ if ne $paginator.PageNumber 1 }}
-      - Page:
-      {{ $paginator.PageNumber }}
-    {{ end }}"
-  />
-  <meta name="application-name" content="{{ .Site.Title }}" />
+    <meta
+      name="title"
+      content="{{ .Params.Title }}{{ if ne $paginator.PageNumber 1 }}
+        - Page:
+        {{ $paginator.PageNumber }}
+      {{ end }}"
+    />
+    <meta
+      property="og:title"
+      content="{{ .Params.Title }}{{ if ne $paginator.PageNumber 1 }}
+        - Page:
+        {{ $paginator.PageNumber }}
+      {{ end }}"
+    />
+    <meta property="og:site_name" content="{{ .Site.Title }}" />
+    <meta
+      property="twitter:title"
+      content="{{ .Params.Title }}{{ if ne $paginator.PageNumber 1 }}
+        - Page:
+        {{ $paginator.PageNumber }}
+      {{ end }}"
+    />
+    <meta name="application-name" content="{{ .Site.Title }}" />
+  {{ end }}
 {{ end }}

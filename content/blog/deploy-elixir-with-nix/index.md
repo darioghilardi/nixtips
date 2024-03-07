@@ -1,17 +1,15 @@
 ---
-title: Deploy elixir with nix
-slug: deploy-elixir-with-nix
-date: 2024-12-12T12:23:12
-featured_image: 'https://google.com/image.png'
-author: Dario
-author_title: TEst
-author_image: ''
+title: Deploy Phoenix projects with Nix
+slug: deploy-phoenix-projects-with-nix
+date: 2024-01-12T12:23:12
+featured_image: '/blog/deploy-phoenix-projects-with-nix/featured.jpg'
+author: Dario Ghilardi
+author_image: '/images/dario.jpeg'
 meta_title: 'title'
 meta_description: desc
-tool: aerocloud
 short_excerpt: short
 long_excerpt: long
-tags: ['wind']
+tags: ['nix', 'elixir', 'phoenix']
 ---
 
 lorem

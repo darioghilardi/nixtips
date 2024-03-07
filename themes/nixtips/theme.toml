@@ -1,9 +1,9 @@
-description = "The ArchiWind.io theme."
+description = "The NixTips.io theme."
 features = []
-homepage = "https://github.com/nablaflow/archiwind.io"
+homepage = "https://github.com/darioghilardi/nixtips"
 license = "MIT"
 min_version = "0.88.0"
-name = "archiwind"
+name = "nixtips"
 tags = ["Hugo", "Tailwind CSS", "theme", "starter", "boilerplate"]
 
 [author]

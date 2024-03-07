@@ -1,4 +1,4 @@
-baseURL = 'https://archiwind.io/'
+baseURL = 'https://nixtips.io/'
 languageCode = 'en-us'
 theme = 'nixtips'
 title = 'NixTips'
@@ -10,9 +10,8 @@ enableRobotsTXT = true
 [params]
   linkedin = "https://www.linkedin.com/company/nabla-flow"
   instagram = "https://www.instagram.com/nablaflow"
-  og_image = "/images/archiwind_card.png"
+  og_image = "/images/nixtips_card.png"
   description = "State of the art wind-assessment for your projects. Analyze wind speeds, turbulences, wind safety and comfort to create pedestrian-friendly spaces."
-  cms_url = "https://directus.nablaflow.io/"
 
 [security.exec]
 osEnv = ['.*']

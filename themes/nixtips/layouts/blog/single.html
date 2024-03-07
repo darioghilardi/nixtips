@@ -2,7 +2,7 @@
   <section id="main" class="mx-auto max-w-[830px] px-8 pt-28 lg:px-0">
     <article id="content">
       <div class="pt-24">
-        <ul class="flex list-none justify-center gap-2 pb-4 text-base font-semibold text-sky-500">
+        <ul class="flex list-none justify-center gap-2 pb-4 text-base font-semibold text-sky-600">
           {{ range .Params.tags }}
             <li>{{ . }}</li>
           {{ end }}
@@ -12,7 +12,7 @@
       <p class="pb-16 text-center text-xl font-normal text-main">{{ .Params.short_excerpt }}</p>
       <div>
         <img
-          src="{{ .Params.featured_image }}/{{ .Params.slug }}.webp?key=featured-image-detail"
+          src="{{ .Params.featured_image }}"
           alt="{{ .Params.title }} image"
           class="mb-6 rounded-2xl"
         />

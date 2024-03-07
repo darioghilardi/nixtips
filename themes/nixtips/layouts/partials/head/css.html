@@ -1,5 +1,5 @@
 {{ $options := dict "inlineImports" true }}
-{{ $styles := resources.Get "dist/index.css" }}
+{{ $styles := resources.Get "dist/index.css" | fingerprint }}
 {{ if hugo.IsProduction }}
   {{ $styles = $styles | minify | fingerprint | resources.PostProcess }}
 {{ end }}
