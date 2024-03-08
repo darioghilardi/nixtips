@@ -1,2 +1,2 @@
-watch_file $(find . -name "*.nix" -printf '"%p" ')
+watch_file $(find . -name "*.nix" | awk -v ORS="' '" '{print $0}')
 use flake . --impure

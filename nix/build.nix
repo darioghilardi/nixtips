@@ -2,7 +2,7 @@
   pkgs,
   nodejs,
 }: let
-  node-modules = pkgs.mkYarnModules {
+  yarnDeps = pkgs.mkYarnModules {
     pname = "deps";
     version = "master";
 
@@ -28,13 +28,12 @@
     ];
 
     configurePhase = ''
-      ln -sf ${node-modules}/node_modules node_modules
+      ln -sf ${yarnDeps}/node_modules ./node_modules
     '';
 
     buildPhase = ''
       export HOME=$TMPDIR
-      hugo -s prebuild/
-      yarn parcel build
+      ./node_modules/.bin/parcel build
       hugo
     '';
 

@@ -43,10 +43,10 @@ jobs:
       #     USER: runner
 
       - name: checks
-        run: nix develop --impure -c "pre-commit"
+        run: nix flake check -L
 
       - name: build
-        run: nix build --impure . -L --no-sandbox
+        run: nix build . -L
 
       - name: copy artifacts
         run: |
