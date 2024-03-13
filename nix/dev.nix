@@ -1,15 +1,14 @@
 {
   pkgs,
+  yarn,
   nodejs,
-  devenv,
-  inputs,
 }: let
   deps = with pkgs;
     [
+      nodejs
       hugo
-      (yarn.override {inherit nodejs;})
       yarn2nix
-      qrencode
+      process-compose
     ]
     ++ lib.optionals stdenv.isLinux linux-deps
     ++ lib.optionals stdenv.isDarwin darwin-deps;
@@ -21,7 +20,9 @@
     darwin.apple_sdk.frameworks.CoreServices
   ];
 
-  node-modules = pkgs.mkYarnModules {
+  src = ../.;
+
+  yarnDeps = pkgs.mkYarnModules {
     pname = "deps";
     version = "master";
 
@@ -32,70 +33,48 @@
     yarnNix = ./yarn-deps.nix;
   };
 
-  cmds = {
+  scripts = {
     prebuild = ''
       rm -rf .parcel-cache
-      yarn parcel build
+      ./node_modules/.bin/parcel build
     '';
-    hugo = "hugo server --disableFastRender -p 5050";
-    parcel = "yarn parcel watch --no-hmr";
-    prettier = "${node-modules}/node_modules/prettier/bin/prettier.cjs --write .";
-    alejandra = "${pkgs.alejandra}/bin/alejandra --check .";
+    hugo-server = "hugo server --disableFastRender -p 5050";
+    parcel-watch = "./node_modules/.bin/parcel watch --no-hmr";
+    start-dev = "process-compose -t=0";
+
+    check-prettier = "./node_modules/.bin/prettier --check .";
+    check-alejandra = "${pkgs.alejandra}/bin/alejandra --check ${src}";
+    check-statix = "${pkgs.statix}/bin/statix check ${src}";
   };
-in
-  devenv.lib.mkShell {
-    inherit inputs pkgs;
 
-    modules = [
-      ({pkgs, ...}: {
-        packages = deps;
+  toPackage = name: script: pkgs.writeShellScriptBin name script;
+  mkCheck = name: script:
+    pkgs.runCommand name {} ''
+      ${script}
+      touch $out
+    '';
 
-        languages = {
-          javascript.enable = true;
-          javascript.package = nodejs;
-          nix.enable = true;
-        };
+  mkNodeCheck = name: script:
+    pkgs.runCommand name {} ''
+      cp -rT ${src} ./
+      ln -sfn ${yarnDeps}/node_modules ./node_modules
+      ${script}
+      touch $out
+    '';
+in {
+  checks = {
+    prettier = mkNodeCheck "prettier" scripts.check-prettier;
+    statix = mkCheck "statix" scripts.check-statix;
+    alejandra = mkCheck "statix" scripts.check-alejandra;
+  };
 
-        env.LANG = "en_US.UTF-8";
-        enterShell = "node --version";
+  shell = pkgs.mkShell {
+    nativeBuildInputs = deps;
+    buildInputs = pkgs.lib.mapAttrsToList toPackage scripts;
 
-        scripts = {
-          prebuild.exec = cmds.prebuild;
-          hugo-server.exec = cmds.hugo;
-          parcel-server.exec = cmds.parcel;
-          prettier.exec = cmds.prettier;
-          alejandra.exec = cmds.alejandra;
-        };
-
-        process = {
-          implementation = "process-compose";
-          process-compose = {
-            port = 9999;
-            tui = "false";
-            version = "0.5";
-          };
-        };
-        process-managers.process-compose.enable = true;
-        processes = {
-          # Clean up existing data (cms downloads and parcel cache), rebuild the
-          # static assets and fetch cms data.
-          prebuild.exec = cmds.prebuild;
-
-          # Wait for the previous commands to finish then run hugo
-          # and parcel in watch mode.
-          parcel-watch = {
-            exec = cmds.parcel;
-            process-compose.depends_on = {
-              prebuild.condition = "process_completed_successfully";
-            };
-          };
-          hugo = {
-            exec = cmds.hugo;
-            process-compose.depends_on = {
-              prebuild.condition = "process_completed_successfully";
-            };
-          };
-        };
-      })
-    ];
-  }
+    shellHook = ''
+      export LANG=en_US.UTF-8
+      ln -sfn ${yarnDeps}/node_modules ./node_modules
+    '';
+  };
+}

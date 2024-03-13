@@ -1,0 +1,15 @@
+version: "0.5"
+
+processes:
+  prebuild:
+    command: prebuild
+  parcel-watch:
+    command: parcel-watch
+    depends_on:
+      prebuild:
+        condition: process_completed_successfully
+  hugo-server:
+    command: hugo-server
+    depends_on:
+      prebuild:
+        condition: process_completed_successfully

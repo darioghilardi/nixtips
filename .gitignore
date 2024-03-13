@@ -6,8 +6,5 @@ resources/
 .parcel-cache
 themes/**/assets/dist/
 public/
-
-# Nix stuff
 .direnv
-.devenv
-.pre-commit-config.yaml
+.envrc

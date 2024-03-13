@@ -5,7 +5,7 @@ on:
 
 env:
   PROJECT_NAME: nixtips
-  SITE_NAME: nixtips.io
+  SITE_NAME: nixtips
   SITE_URL: nixtips.pages.dev
   PREVIEW_SUBDOMAIN: deploy-preview-${{ github.event.number }}
 
@@ -36,10 +36,10 @@ jobs:
       #     USER: runner
 
       - name: checks
-        run: nix develop --impure -c "pre-commit"
+        run: nix flake check -L
 
       - name: build
-        run: nix build --impure . -L --no-sandbox
+        run: nix build . -L
 
       - name: copy artifacts
         run: |

@@ -2,32 +2,37 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    devenv.url = "github:cachix/devenv";
+    nix-filter.url = "github:numtide/nix-filter";
   };
 
   outputs = {
     self,
     nixpkgs,
     flake-utils,
-    devenv,
+    nix-filter,
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = import nixpkgs {inherit system;};
-      nodejs = pkgs.nodejs_20;
+      pkgs = import nixpkgs {
+        inherit system;
 
-      website = pkgs.callPackage ./nix/build.nix {inherit nodejs;};
-      devShell = pkgs.callPackage ./nix/dev.nix {inherit devenv inputs nodejs;};
-    in {
-      packages = {
-        inherit (pkgs) qrencode;
-
-        default = website;
-        # For now to fix https://github.com/cachix/devenv/issues/756
-        devenv-up = self.devShells.${system}.default.config.procfileScript;
+        overlays = [
+          (import ./nix/overlay.nix)
+        ];
       };
 
-      devShells.default = devShell;
+      website = pkgs.callPackage ./nix/build.nix {};
 
+      devShell = pkgs.callPackage ./nix/dev.nix {};
+    in {
+      inherit (devShell) checks;
+      # checks = devShell.checks;
+
+      packages = {
+        inherit (pkgs) qrencode;
+        default = website;
+      };
+
+      devShells.default = devShell.shell;
       formatter = pkgs.alejandra;
     });
 }
