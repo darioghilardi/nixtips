@@ -4,7 +4,7 @@ homepage = "https://github.com/darioghilardi/nixtips"
 license = "MIT"
 min_version = "0.88.0"
 name = "nixtips"
-tags = ["Hugo", "Tailwind CSS", "theme", "starter", "boilerplate"]
+tags = ["Hugo", "Tailwind CSS", "theme", "nixtips"]
 
 [author]
 homepage = "https://github.com/darioghilardi/"

@@ -8,10 +8,8 @@ summaryLength = 50
 enableRobotsTXT = true
 
 [params]
-  linkedin = "https://www.linkedin.com/company/nabla-flow"
-  instagram = "https://www.instagram.com/nablaflow"
   og_image = "/images/nixtips_card.png"
-  description = "State of the art wind-assessment for your projects. Analyze wind speeds, turbulences, wind safety and comfort to create pedestrian-friendly spaces."
+  description = "NixTips, stories and tips from using Nix in production."
 
 [security.exec]
 osEnv = ['.*']
@@ -22,10 +20,3 @@ disableKinds = ["page", "section", "taxonomy", "term"]
 [module.hugoVersion]
 extended = false
 min = "0.112.0"
-
-[[module.mounts]]
-source = "content"
-target = "content"
-[[module.mounts]]
-source = "prebuild/public/posts"
-target = "content/blog"
