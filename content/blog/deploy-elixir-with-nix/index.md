@@ -9,22 +9,65 @@ meta_title: 'title'
 meta_description: desc
 short_excerpt: short
 long_excerpt: long
+draft: false
 tags: ['nix', 'elixir', 'phoenix']
 ---
 
 ### Introduction
 
-Nix is a purely functional package manager (and a language) that has the main scope of building and distributing packages in a reproducible way.
+This post is an introduction to packaging and deploying an Elixir application using Nix. For the purpose of this post we're going to "nixify" a Phoenix project, from the setup of the development environment to the release.
 
-At NablaFlow we love the ideas behind Nix and the many advantages it brings to our development workflow:
+You need to have Nix installed and flakes support enabled.
 
-- Two people building the same package will always get the same output. This is not always true when using dockerfiles, in fact it's easy to build two different images from the same dockerfile if the build happens at different times.
-- Multiple versions of the same package can be installed without stepping into each other. While this problem can be solved with tools like asdf, Nix is fast and it works for any language.
-- Effective binary caching: Nix knows before building a package if that package has been already been built, in those cases it can pull the package from the cache and save build time.
+For the purpose of this post we are going to use a new Phoenix project generated with `mix phx.new`.
 
-In this post we will dive into how we package and containerize an Elixir application using Nix. Let's get started.
+Alert: We're taking deliberate choices during this post, please do not think this is "the way" of packaging an Elixir application, it's just "one way" that works.
 
 ### Get started
+
+The first step is to make sure your project is a flake. A flake is nothing more than a directory that contains a `flake.nix` and a `flake.lock` files at its root.
+
+We don't have them yet, but Nix provides a CLI command to generate the `flake.nix` files, just enter the directory of your project and run:
+
+```
+nix flake init
+```
+
+Wait a few seconds and you'll find the `flake.nix` file in your project root. Well done, your project is (almost) a flake now!
+
+The `flake.nix` file is where we're going to configure the project using Nix. The missing `flake.lock`, as the name suggests, is just a lockfile (like `mix.lock`), it keeps track of the versions of your flake "inputs". You don't have to worry about it now, it will be generated for you as soon as your run any command against the flake with the CLI.
+
+But what is a flake input and why do we need a lockfile at all?
+Inputs are Nix dependencies required to "build" your flake, for example Git repositories, urls or your filesystem.
+
+Open the generated `flake.nix` file to find one input called `nixpkgs`:
+
+```nix
+inputs = {
+  nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+};
+```
+
+[`nixpkgs`](https://github.com/NixOS/nixpkgs) is a Git repository where all packages built with Nix are stored. It's probably the biggest package repository in the world and it is continuously update with new versions of each package. This is great but we can't change the versions of our dependencies each time we build our project just because those dependencies have been updated on `nixpkgs`!
+This is the reason why a flake to be complete requires a `flake.lock` file, to pin the version of `nixpkgs` and ensure our project will always be reproducible (until the `nixpkgs` repository is around).
+
+Generate your lockfile by running `nix flake show`, which is non destructive command that shows the outputs of a flake in the terminal (no worries, we'll talk about flake outputs later). Here we go, `flake.lock` is available in our project.
+
+Those two files are supposed to be stored under version control, so commit them in your project before moving to the next step where we will create a development environment.
+
+### Development environment
+
+To run an Elixir project you need Elixir and Erlang installed on your machine. Of course if you generated a new project at the beginning of this post with `mix phx.new` it means Elixir is already available somewhere on your machine. Still, we want to improve your setup with Nix by achieving the following:
+
+- Have Elixir and Erlang installed locally, without relying on global installation on your machine (which will be painful if you want to work on multiple projects that rely on different versions)
+- Pin Elixir and Erlang to a specific version
+- Activate Elixir and Erlang only when entering the project directory
+
+Before moving further, many excellent tools are available nowadays to manage development environments dependencies using Nix, from [devenv][https://devenv.sh] to [devbox](https://www.jetpack.io/devbox) or [flox](https://flox.dev/), just to name a few. They are very easy to setup and I suggest you to look into them. In this post however we are going to configure the development environment using Nix only, it's not that hard​ in the end!
+
+To keep our project tidy and clean, create a new folder called `nix` at the root of your project and add a new file called `dev.nix`. We'll wire up this file with the `flake.nix` file later.
+
+If you generated an Elixir project on your machine it means
 
 If you are new to packaging Elixir applications with Nix, we strongly suggest you to read the chapter of the [Nixpkgs manual](https://nixos.org/manual/nixpkgs/stable/#sec-beam) dedicated to BEAM languages. The manual contains valuable informations, although we have to admit it can be a bit confusing. We hope this post will clarify the confusing parts and provide you with a ready to use solution to use Nix when packaging your application.
 
@@ -50,29 +93,32 @@ In our projects we use `mix2nix`. Each time we update a dependency we make sure 
 
 ```
 mix2nix > mix_deps.nix
+
 ```
 
 Since that extra command is easy to forget, just add an alias to your shell:
 
 ```
 alias mdgn='mix deps.get && mix2nix > mix_deps.nix'
+
 ```
 
 Let's have a quick look at the `mix_deps.nix` file that is produced by `mix2nix`. It contains a list of all the Elixir dependencies of your project, each one with its own hash and a list of the recursive dependencies. For `absinthe`, a popular GraphQL library, we should get this expression:
 
 ```
 absinthe = buildMix rec {
-  name = "absinthe";
-  version = "1.7.6";
+name = "absinthe";
+version = "1.7.6";
 
-  src = fetchHex {
-    pkg = "absinthe";
-    version = "${version}";
-    sha256 = "e7626951ca5eec627da960615b51009f3a774765406ff02722b1d818f17e5778";
-  };
-
-  beamDeps = [dataloader decimal nimble_parsec telemetry];
+src = fetchHex {
+pkg = "absinthe";
+version = "${version}";
+sha256 = "e7626951ca5eec627da960615b51009f3a774765406ff02722b1d818f17e5778";
 };
+
+beamDeps = [dataloader decimal nimble_parsec telemetry];
+};
+
 ```
 
 (Remember that above we reported that `buildMix` was supposed to be used when building libraries, here is `mix2nix` invoking it).
@@ -81,6 +127,7 @@ Now we have a way to package backend dependencies using Nix which is reproducibl
 
 ```
 mixNixDeps = with pkgs; import ./mix_deps.nix { inherit lib beamPackages; };
+
 ```
 
 That's it.
@@ -93,15 +140,13 @@ This solution will cover most of the projects, however if you are using git depe
 
 - Remove manually the git dependencies from `mix_deps.nix` and pass them as overrides to the import function, like in the following example.
 
-  ```
-  mixNixDeps = import ./mix.nix {
-      inherit beamPackages lib;
-      overrides = (final: prev: {
-        # mix2nix does not support git dependencies yet,
-        # so we need to add them manually
-        prometheus_ex = beamPackages.buildMix rec {
-          name = "prometheus_ex";
-          version = "3.0.5";
+```
+mixNixDeps = import ./mix.nix {
+inherit beamPackages lib;
+overrides = (final: prev: { # mix2nix does not support git dependencies yet, # so we need to add them manually
+prometheus_ex = beamPackages.buildMix rec {
+name = "prometheus_ex";
+version = "3.0.5";
 
           # Change the argument src with the git src that you actually need
           src = fetchFromGitLab {
@@ -116,8 +161,10 @@ This solution will cover most of the projects, however if you are using git depe
           beamDeps = with final; [ prometheus ];
         };
     });
-  };
-  ```
+
+};
+
+```
 
 #### Frontend dependencies
 
@@ -127,6 +174,7 @@ For the reasons explained in the previous paragraph we avoid the creation of a F
 
 ```
 yarn2nix > yarn_deps.nix
+
 ```
 
 If you are packaging a Phoenix project remember to run this command into the folder where you have the `yarn.lock` file (usually `assets`).
@@ -142,3 +190,7 @@ We are going to create a file called `elixir.nix`
 You can find a demo repository with the code we used during this post so you can experiment with it.
 
 ### Caveats
+
+```
+
+```
