@@ -1,6 +1,6 @@
 ---
-title: Deploy Phoenix projects with Nix
-slug: deploy-phoenix-projects-with-nix
+title: Deploy Elixir projects with Nix
+slug: deploy-elixir-projects-with-nix
 date: 2024-01-12T12:23:12
 featured_image: '/blog/deploy-phoenix-projects-with-nix/featured.jpg'
 author: Dario Ghilardi

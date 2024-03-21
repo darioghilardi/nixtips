@@ -9,6 +9,7 @@
       hugo
       yarn2nix
       process-compose
+      yarn
     ]
     ++ lib.optionals stdenv.isLinux linux-deps
     ++ lib.optionals stdenv.isDarwin darwin-deps;
