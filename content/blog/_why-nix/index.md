@@ -23,7 +23,6 @@ At NablaFlow we love the ideas behind Nix and the many advantages it brings to o
 sudo bash -e
 ```
 
-
 - Two people building the same package will always get the same output. This is not always true when using dockerfiles, in fact it's easy to build two different images from the same dockerfile if the build happens at different times.
 - Multiple versions of the same package can be installed without stepping into each other. While this problem can be solved with tools like asdf, Nix is fast and it works for any language.
 - Effective binary caching: Nix knows before building a package if that package has been already been built, in those cases it can pull the package from the cache and save build time.

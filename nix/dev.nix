@@ -44,6 +44,7 @@
     start-dev = "process-compose -t=0";
 
     check-prettier = "./node_modules/.bin/prettier --check .";
+    fix-prettier = "./node_modules/.bin/prettier --write .";
     check-alejandra = "${pkgs.alejandra}/bin/alejandra --check ${src}";
     check-statix = "${pkgs.statix}/bin/statix check ${src}";
   };
