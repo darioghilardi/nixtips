@@ -39,7 +39,7 @@
       rm -rf .parcel-cache
       ./node_modules/.bin/parcel build
     '';
-    hugo-server = "hugo server --disableFastRender -p 5050";
+    hugo-server = "hugo server --disableFastRender -p 5050 --buildDrafts";
     parcel-watch = "./node_modules/.bin/parcel watch --no-hmr";
     start-dev = "process-compose -t=0";
 
