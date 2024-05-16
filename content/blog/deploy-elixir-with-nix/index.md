@@ -8,8 +8,9 @@ author_image: '/images/dario.jpeg'
 meta_title: 'title'
 meta_description: desc
 short_excerpt: short
-long_excerpt: long
-draft: false
+long_excerpt: A slow paced guide to setup your Elixir development environment using Nix.
+draft: true
+summary: A guide to setup the Elixir development environment for your project using Nix.
 tags: ['nix', 'elixir', 'phoenix']
 ---
 
@@ -48,7 +49,7 @@ inputs = {
 };
 ```
 
-[`nixpkgs`](https://github.com/NixOS/nixpkgs) is a Git repository where all packages built with Nix are stored. It's probably the biggest package repository in the world and it is continuously update with new versions of each package. This is great but we can't change the versions of our dependencies each time we build our project just because those dependencies have been updated on `nixpkgs`!
+[`nixpkgs`][1] is a Git repository where all packages built with Nix are stored. It's probably the biggest package repository in the world and it is continuously update with new versions of each package. This is great but we can't change the versions of our dependencies each time we build our project just because those dependencies have been updated on `nixpkgs`!
 This is the reason why a flake to be complete requires a `flake.lock` file, to pin the version of `nixpkgs` and ensure our project will always be reproducible (until the `nixpkgs` repository is around).
 
 Generate your lockfile by running `nix flake show`, which is non destructive command that shows the outputs of a flake in the terminal (no worries, we'll talk about flake outputs later). Here we go, `flake.lock` is available in our project.
@@ -63,13 +64,13 @@ To run an Elixir project you need Elixir and Erlang installed on your machine. O
 - Pin Elixir and Erlang to a specific version
 - Activate Elixir and Erlang only when entering the project directory
 
-Before moving further, many excellent tools are available nowadays to manage development environments dependencies using Nix, from [devenv][https://devenv.sh] to [devbox](https://www.jetpack.io/devbox) or [flox](https://flox.dev/), just to name a few. They are very easy to setup and I suggest you to look into them. In this post however we are going to configure the development environment using Nix only, it's not that hard​ in the end!
+Before moving further, many excellent tools are available nowadays to manage development environments dependencies using Nix, from [devenv][https://devenv.sh] to [devbox][2] or [flox][3], just to name a few. They are very easy to setup and I suggest you to look into them. In this post however we are going to configure the development environment using Nix only, it's not that hard​ in the end!
 
 To keep our project tidy and clean, create a new folder called `nix` at the root of your project and add a new file called `dev.nix`. We'll wire up this file with the `flake.nix` file later.
 
 If you generated an Elixir project on your machine it means
 
-If you are new to packaging Elixir applications with Nix, we strongly suggest you to read the chapter of the [Nixpkgs manual](https://nixos.org/manual/nixpkgs/stable/#sec-beam) dedicated to BEAM languages. The manual contains valuable informations, although we have to admit it can be a bit confusing. We hope this post will clarify the confusing parts and provide you with a ready to use solution to use Nix when packaging your application.
+If you are new to packaging Elixir applications with Nix, we strongly suggest you to read the chapter of the [Nixpkgs manual][4] dedicated to BEAM languages. The manual contains valuable informations, although we have to admit it can be a bit confusing. We hope this post will clarify the confusing parts and provide you with a ready to use solution to use Nix when packaging your application.
 
 Let's start by collecting the information we find in the manual: it says that for Elixir applications we should use `mixRelease` to make a release, while `buildMix` should be used for libraries and other dependecies. We have not discovered where those helpers are coming from yet.
 It also says that the build dependencies will need to be fetched using `fetchMixDeps` and passed to it. Finally it says that for a Phoenix project (the one will package in this post) there are three steps to make a release:
@@ -168,7 +169,7 @@ version = "3.0.5";
 
 #### Frontend dependencies
 
-Most Phoenix projects require Node dependencies. There are two ways to package them using Nix: creating a Fixed-Output-Derivation or using a tool that reads either the `package-lock.json` file or the `yarn.lock` file to generate a corresponding file containing Nix expressions. The manual [explains in details](https://nixos.org/manual/nixpkgs/stable/#javascript-tool-specific) how to build your Javascript project dependencies.
+Most Phoenix projects require Node dependencies. There are two ways to package them using Nix: creating a Fixed-Output-Derivation or using a tool that reads either the `package-lock.json` file or the `yarn.lock` file to generate a corresponding file containing Nix expressions. The manual [explains in details][5] how to build your Javascript project dependencies.
 
 For the reasons explained in the previous paragraph we avoid the creation of a FOD and use `yarn2nix` to generate the `yarn_deps.nix` file.
 
@@ -194,3 +195,9 @@ You can find a demo repository with the code we used during this post so you can
 ```
 
 ```
+
+[1]: https://github.com/NixOS/nixpkgs
+[2]: https://www.jetpack.io/devbox
+[3]: https://flox.dev/
+[4]: https://nixos.org/manual/nixpkgs/stable/#sec-beam
+[5]: https://nixos.org/manual/nixpkgs/stable/#javascript-tool-specific
