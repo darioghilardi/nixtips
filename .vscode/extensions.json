@@ -5,6 +5,7 @@
     "bradlc.vscode-tailwindcss",
     "esbenp.prettier-vscode",
     "budparr.language-hugo-vscode",
-    "kaellarkin.hugo-shortcode-syntax"
+    "kaellarkin.hugo-shortcode-syntax",
+    "yzhang.markdown-all-in-one"
   ]
 }
