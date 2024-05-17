@@ -21,7 +21,7 @@
         ><h5 class="font-display pb-2 text-2xl font-semibold">{{ .Title }}</h5></a
       >
       <p class="mb-8 text-base font-normal">
-        {{ .Summary | safeHTML }}
+        {{ .Params.long_excerpt }}
       </p>
       {{ partial "components/post_author" . }}
     </div>

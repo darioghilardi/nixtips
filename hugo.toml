@@ -9,7 +9,7 @@ enableRobotsTXT = true
 
 [params]
   og_image = "/images/nixtips_card.png"
-  description = "NixTips, stories and tips from using Nix in production."
+  description = "Stories and tips from using Nix in production."
 
 [security.exec]
 osEnv = ['.*']
